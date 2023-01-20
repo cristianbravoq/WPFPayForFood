@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="WPFPayForFood.UserControls.UserPointUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFPayForFood.UserControls"
+             xmlns:gif="http://wpfanimatedgif.codeplex.com"
+             gif:ImageBehavior.AnimateInDesignMode="True"
+             mc:Ignorable="d"
+             Height="1920" Width="1080">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/Backgrounds/bgRestaurants.png" Stretch="Uniform"/>
+        </Grid.Background>
+
+        <Image
+            Source="/Images/Others/ImgLogo.png" 
+            Margin="304,148,304,1516" RenderTransformOrigin="0.5,0.5"
+            >
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.23"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <Image 
+                gif:ImageBehavior.AnimatedSource="/Images/Gif/gif_scaner_cc.gif" 
+                gif:ImageBehavior.AnimateInDesignMode="True"
+                gif:ImageBehavior.AutoStart="True"
+                Stretch="Uniform"
+                Margin="0,545,0,0"
+            Visibility="Visible"
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Center" 
+                Height="1375" Width="852" />
+
+    </Grid>
+</UserControl>

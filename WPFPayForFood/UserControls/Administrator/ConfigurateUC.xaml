@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="WPFPayForFood.UserControls.Administrator.ConfigurateUC"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:WPFPayForFood.UserControls.Administrator"
+        xmlns:res="clr-namespace:WPFPayForFood.Resources"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        gif:ImageBehavior.AnimateInDesignMode="True"
+        mc:Ignorable="d"
+        Height="1920" 
+        Width="1080">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/Backgrounds/bgRestaurants.png" Stretch="Uniform"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="200"/>
+        </Grid.RowDefinitions>
+
+            <TextBlock
+                FontSize="75"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,0"
+                TextAlignment="Center"
+                TextWrapping="Wrap"
+                Width="800"
+                Grid.Row="1"
+                FontFamily="Arial" 
+                Foreground="Black"
+                Text="Configuración del dispositivo"
+                FontWeight="Bold" />
+
+            <TextBlock 
+                Text="Espere mientras se configura el dispositivo para iniciar"
+                FontFamily="Arial"
+                FontSize="50"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center"
+                Margin="0,300,0,0"
+                Grid.Row="1"
+                Foreground="Black"
+                Width="700"
+                TextWrapping="Wrap"
+                TextAlignment="Center"
+               />
+            
+            <Image 
+                gif:ImageBehavior.AnimatedSource="/Images/Gif/load.gif" 
+                gif:ImageBehavior.AnimateInDesignMode="True"
+                gif:ImageBehavior.AutoStart="True"
+                Stretch="Uniform"
+                Margin="0,300,0,60"
+                Grid.Row="1"
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Center" 
+                Height="400" />
+            
+            <TextBlock x:Name="txtMs"
+                Text="{Binding DescriptionStatusPayPlus}"
+                FontFamily="Arial"
+                FontSize="40"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,150"
+                Foreground="Black"
+                Grid.Row="1"
+                TextWrapping="Wrap"
+                TextAlignment="Center"
+                FontWeight="Bold"  />
+    </Grid>
+</UserControl>

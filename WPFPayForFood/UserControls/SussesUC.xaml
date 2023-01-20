@@ -1,0 +1,143 @@
+﻿<UserControl x:Class="WPFPayForFood.UserControls.SussesUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFPayForFood.UserControls"
+             xmlns:gif="http://wpfanimatedgif.codeplex.com"
+             mc:Ignorable="d"
+             Height="1920" 
+             Width="1080" >
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/Backgrounds/bgpart2.png" Stretch="Uniform"/>
+        </Grid.Background>
+
+        <Image
+            Source="/Images/Others/ImgLogo.png" 
+            Margin="317,159,287,1505" RenderTransformOrigin="0.5,0.5"
+            >
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.23"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+        <Image
+            Source="/Images/Backgrounds/Bgdata.png" 
+            Margin="176,528,140,336" RenderTransformOrigin="0.5,0.5"
+           />
+
+        <Image
+            Source="/Images/Others/ImgCalifica.png" 
+            Margin="396,606,396,1054" RenderTransformOrigin="0.5,0.5"
+           />
+
+
+        <Image
+            Source="/Images/Others/IcoStar.png" 
+             Tag="1"
+            TouchDown="Btn_Calificacion"
+            x:Name="Star1"
+            Margin="267,960,710,878" RenderTransformOrigin="0.5,0.5"
+           />
+
+        <Image
+            Source="/Images/Others/IcoStar.png" 
+            Tag="5"
+            x:Name="Star5"
+            TouchDown="Btn_Calificacion"
+            Margin="756,960,221,878" RenderTransformOrigin="0.5,0.5"
+           />
+
+        <Image
+            Source="/Images/Others/IcoStar.png" 
+            Tag="2"
+            x:Name="Star2"
+            TouchDown="Btn_Calificacion"
+            Margin="396,960,582,878" RenderTransformOrigin="0.5,0.5"
+           />
+
+        <Image
+            Source="/Images/Others/IcoStar.png" 
+            Tag="3"
+            x:Name="Star3"
+            TouchDown="Btn_Calificacion"
+            Margin="517,960,460,878" RenderTransformOrigin="0.5,0.5"
+           />
+
+        <Image
+            Source="/Images/Others/IcoStar.png" 
+                Tag="4"
+            x:Name="Star4"
+            TouchDown="Btn_Calificacion"
+            Margin="635,960,342,878" RenderTransformOrigin="0.5,0.5"
+           />
+
+        <Image
+            Source="/Images/Others/IcoStars.png" 
+            Tag="1"
+            Visibility="Hidden"
+            x:Name="StarS1"
+            TouchDown="Btn_Calificacion"
+            Margin="267,960,710,878" RenderTransformOrigin="0.5,0.5"
+           />
+
+        <Image
+            Source="/Images/Others/IcoStarS.png" 
+            Visibility="Hidden"
+            Tag="5"
+            x:Name="StarS5"
+            TouchDown="Btn_Calificacion"
+            Margin="756,960,221,878" RenderTransformOrigin="0.5,0.5"
+           />
+
+        <Image
+            Source="/Images/Others/IcoStarS.png" 
+            Tag="2"
+            Visibility="Hidden"
+            x:Name="StarS2"
+            TouchDown="Btn_Calificacion"
+            Margin="396,960,582,878" RenderTransformOrigin="0.5,0.5"
+           />
+
+        <Image
+            Source="/Images/Others/IcoStarS.png"
+            Tag="3"
+            Visibility="Hidden"
+            x:Name="StarS3"
+            TouchDown="Btn_Calificacion"
+            Margin="517,960,460,878" RenderTransformOrigin="0.5,0.5"
+           />
+
+        <Image
+            Source="/Images/Others/IcoStarS.png" 
+            Tag="4"
+            Visibility="Hidden"
+            x:Name="StarS4"
+            TouchDown="Btn_Calificacion"
+            Margin="635,960,342,878" RenderTransformOrigin="0.5,0.5"
+           />
+
+        <Image 
+                x:Name="aceptar"
+                Source="/Images/buttons/aceptar.png" 
+                Margin="0,1438,0,0" 
+                VerticalAlignment="Top" 
+               Visibility="Hidden"
+                HorizontalAlignment="Center"
+                Height="80"       
+                Stretch="Uniform"
+                TouchDown="btnaceptar_TouchDown"
+            />
+
+
+
+
+    </Grid>
+</UserControl>
+

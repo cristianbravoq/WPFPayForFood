@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="WPFPayForFood.UserControls.MainUC"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:WPFPayForFood.UserControls"
+        mc:Ignorable="d"
+        Height="1920" 
+        Width="1080" >
+    <Grid TouchDown="Next_TouchDown" MouseDown="siguientePantalla">
+        <Grid.Background>
+            <ImageBrush ImageSource="{Binding sourse}"/>
+        </Grid.Background>
+    </Grid>
+</UserControl>

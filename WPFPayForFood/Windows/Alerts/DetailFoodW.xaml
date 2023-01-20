@@ -1,0 +1,256 @@
+﻿<Window x:Class="WPFPayForFood.Windows.Alerts.DetailFoodW"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFPayForFood.Windows.Alerts"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="DetailFoodW" WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowState="Maximized"
+        Height="1920" 
+        Width="1080"
+        WindowStartupLocation="CenterScreen" >
+
+
+    <Grid>
+
+        <Grid.Background>
+            <ImageBrush  ImageSource="/Images/Backgrounds/BgPart1.png" Stretch="Fill"/>
+        </Grid.Background>
+
+        <Image 
+                            x:Name="btnSubs"
+                            Source="/Images/Buttons/IcoMenos.png"
+                            Height="120"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Margin="97,1741,0,0"
+                            Stretch="Uniform"
+                            TouchDown="btnSubs_TouchDown" Width="120"
+                        />
+        <Image 
+                            Source="/Images/Others/InputCantidad.png"
+                            Height="120"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Margin="381,1741,0,0"
+                            Stretch="Fill"
+                            Width="220"
+                        />
+        <TextBlock
+                            x:Name="txtCount"
+                            Text="1"
+                            FontSize="50"
+                            FontWeight="Bold"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="466,1761,0,0"
+                            Foreground="Black" Height="80" Width="50"
+                        />
+
+        <Image 
+                            x:Name="btnSum"
+                            Source="/Images/Buttons/icomas2.png"
+                            Height="120"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Margin="231,1741,0,0"
+                            Stretch="Uniform"
+                            TouchDown="btnSum_TouchDown" Width="120"
+                        />
+
+
+        <Image 
+                Source="/Images/Buttons/BtnExit.png"
+                Height="88"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="0,21,21,0"
+                TouchDown="Close_TouchDown" Width="88"
+            />
+
+
+        <Image 
+                            Source="/Images/Others/InputAgregar.png"
+                            Height="120"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Margin="681,1740,0,0"
+                            Stretch="Fill"
+                            TouchDown="Agregar_TouchDown" Width="312"
+                        
+                        />
+
+        <TextBlock
+                            x:Name="Agregar"
+                            Text="Agregar"
+                            FontSize="40"
+                            FontWeight="Bold"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="765,1769,0,0"
+                            TouchDown="Agregar_TouchDown"
+                            Foreground="Black" Height="64" Width="164"
+                        />
+
+
+        <Image 
+              Source="{Binding imagen}"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top"
+              Stretch="Uniform" Height="265" Width="383" Margin="381,0,0,0"
+        />
+
+        <TextBlock
+          Text="{Binding nombrE_PRODUCTO}"
+          FontSize="40"
+          FontWeight="Bold"
+          VerticalAlignment="Top"
+          TextWrapping="Wrap"
+          TextAlignment="Center"
+          HorizontalAlignment="Center"
+          Foreground="Black" Width="778" Margin="0,283,0,0" Height="116"
+                        />
+
+        <TextBlock
+            Text="{Binding descripcion}"
+            FontSize="25"
+            Width="836"
+            VerticalAlignment="Top"
+            TextAlignment="Center"
+            TextWrapping="Wrap"
+            HorizontalAlignment="Center"
+            Margin="0,404,0,0" FontWeight="Bold" Height="104"
+        />
+
+        <ListView 
+             x:Name="lv_Products"
+             HorizontalAlignment="Center" 
+             VerticalAlignment="Top"
+             ItemsSource="{Binding}"
+             Background="Transparent"
+             BorderBrush="Transparent"
+             AutomationProperties.AutomationId="ItemGridView"
+             AutomationProperties.Name="Grouped Items" Height="1166" Width="906" Margin="0,513,0,0" 
+                            >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}"
+                        >
+                    <!--<EventSetter Event="TouchDown"
+                         Handler="ListViewItem_TouchDown" />-->
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <ContentPresenter>
+                                </ContentPresenter>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="1"
+                                 HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel 
+                                    Orientation="Horizontal" 
+                                    VerticalAlignment="Stretch" 
+                                    HorizontalAlignment="Stretch">
+                        <Grid 
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Margin="0,0,0,0"
+                                        Width="800">
+                            <TextBlock 
+                                            Text="{Binding nombre}"
+                                            FontSize="30"
+                                            FontWeight="Bold"
+                                            TextWrapping="Wrap"
+                                            TextAlignment="Center"
+                                            Margin="0,0,0,0"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Center"
+                                            Foreground="Black"
+                                        />
+                            <ListView 
+                                            HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"
+                                            ItemsSource="{Binding recetas}"
+                                            Margin="0,60,0,0"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            AutomationProperties.AutomationId="ItemGridView"
+                                            AutomationProperties.Name="Grouped Items"
+                                            >
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}"
+                                    >
+                                        <!--<EventSetter Event="TouchDown"
+                         Handler="ListViewItem_TouchDown" />-->
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListViewItem">
+                                                    <ContentPresenter>
+                                                    </ContentPresenter>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="1"
+                                                    HorizontalAlignment="Center"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid 
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Margin="0,0,0,0"
+                                                        Width="800"
+                                                        Tag="{Binding data}"
+                                                        >
+                                            <TextBlock 
+                                                            FontSize="30"
+                                                            Margin="0,0,0,0"
+                                                            VerticalAlignment="Top"
+                                                            TextWrapping="Wrap"
+                                                            TextAlignment="Left"
+                                                            HorizontalAlignment="Left"
+                                                        >
+                                                            <Run Text="{Binding iteM_RECETA}"/><LineBreak/>
+                                                            <Run Text="{Binding valor, StringFormat={}{0:C0}}" FontWeight="Bold"/>
+                                            </TextBlock>
+                                            <Image  
+                                                            Source="{Binding img}"
+                                                            Height="30"
+                                                
+                                                            Margin="20,0,0,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            Stretch="Uniform"
+                                                            TouchDown="Select_TouchDown"
+                                                        />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+    </Grid>
+
+</Window>
