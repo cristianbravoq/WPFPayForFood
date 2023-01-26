@@ -16,13 +16,17 @@ namespace WPFPayForFood.Windows.Alerts
         #region "Referencias"
         public string nombre;
         public int IDPayer;
+        public ResponseCreatePayer createPayer;
+        
         #endregion
 
         #region "Constructor"
-        public NameW()
+        public NameW(int idPayer)
         {
             InitializeComponent();
             nombre = string.Empty;
+            IDPayer = idPayer;
+            //var _idPayer = idPayer;
         }
         #endregion
 
@@ -34,20 +38,20 @@ namespace WPFPayForFood.Windows.Alerts
 
         private void btnaceptar_TouchDown(object sender, TouchEventArgs e)
         {
-            if (Validate())
+            if (!Validate())
             {
 
-                RequestCreatePayerPoints Request = new RequestCreatePayerPoints
+                RequestSetPayerData Request = new RequestSetPayerData
                 {
                     cel = txtNum.Text,
                     email = txtCorreo.Text,
-                    nombre = txtName.Text,
-                
+                    idPayer = IDPayer
+                    //nombre = txtName.Text,
+                    //};
                 };
 
-                var Response = AdminPayPlus.apiIntegration.CreatePayer(Request);
+                var Response = AdminPayPlus.apiIntegration.SetPayer(Request);
 
-                IDPayer = Response.Result.data;
                 DialogResult = true;
             }
         }
@@ -58,9 +62,25 @@ namespace WPFPayForFood.Windows.Alerts
         {
             try
             {
-                if (txtName.Text != string.Empty)
+                if (IDPayer == 0)
                 {
-                    nombre = txtName.Text;
+                    RequestCreatePayerPoints Request = new RequestCreatePayerPoints
+                    {
+                        nombre = "-",
+                        email = txtCorreo.Text,
+                        cel = txtNum.Text,
+                        documentO_ID = "-",
+                        fechA_NACIMIENTO = "-",
+                        points = "-"
+                    };
+
+                    createPayer = AdminPayPlus.apiIntegration.CreatePayer(Request).GetAwaiter().GetResult();
+
+                    if(createPayer.codeError == 200)
+                    {
+                        IDPayer = createPayer.data;
+                        DialogResult = true;
+                    }
                     return true;
                 }
             }

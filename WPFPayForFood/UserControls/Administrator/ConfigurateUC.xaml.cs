@@ -144,7 +144,7 @@ namespace WPFPayForFood.UserControls.Administrator
                                 Date = DateTime.Now
                             }, ELogType.General);
 
-                            Utilities.ShowModal(MessageResource.NoService + " " + MessageResource.NoMoneyKiosco, EModalType.Error, this, true);
+                            Utilities.ShowModal(MessageResource.NoService + " " + MessageResource.NoMoneyKiosco, EModalType.Error ,true);
                         }
                         else
                         {
@@ -156,7 +156,7 @@ namespace WPFPayForFood.UserControls.Administrator
                                 Date = DateTime.Now
                             }, ELogType.General);
 
-                            Utilities.ShowModal(MessageResource.NoService + " " + init.DescriptionStatusPayPlus, EModalType.Error, this, true);
+                            Utilities.ShowModal(MessageResource.NoService + " " + init.DescriptionStatusPayPlus, EModalType.Error, true);
                         }
 
                         Initial();

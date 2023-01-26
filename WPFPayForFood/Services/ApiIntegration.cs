@@ -67,8 +67,8 @@ namespace WPFPayForFood.Services
                 client = new HttpClient();
                 client.BaseAddress = new Uri(basseAddress);
 
-         //       var request = JsonConvert.SerializeObject();
-               var content = new StringContent("dato",Encoding.UTF8, "Application/json");
+                //       var request = JsonConvert.SerializeObject();
+                var content = new StringContent("", Encoding.UTF8, "Application/json");
                 var url = Utilities.GetConfiguration("Restaurants");
 
                 var response = await client.PostAsync(url, content);
@@ -77,6 +77,12 @@ namespace WPFPayForFood.Services
                 {
                     return null;
                 }
+
+                //var client = new RestClient($"https://apipayforfood.e-city.co/{Utilities.GetConfiguration("Restaurants")}");
+                //client.Timeout = -1;
+                //var request = new RestRequest(Method.POST);
+                //IRestResponse response = client.Execute(request);
+                //Console.WriteLine(response.Content);
 
                 var result = await response.Content.ReadAsStringAsync();
                 var responseApi = JsonConvert.DeserializeObject<ResponseRestaurante>(result);
@@ -159,24 +165,103 @@ namespace WPFPayForFood.Services
             return null;
         }
 
-        public async Task<string> GetPayerDocument(string idPayer)
+        public async Task<ResponseGetPayerDocument> GetPayerDocument(RequestGetPayerDocument idPayer)
         {
             try
             {
-                var client = new RestClient("https://apipayforfood.e-city.co/Payer/GetPayerDocument");
-                client.Timeout = -1;
-                var request = new RestRequest(Method.POST);
-                request.AddHeader("Content-Type", "application/json");
-                var body = @"{
-" + "\n" +
-                @"  ""documentO_ID"": cedula
-" + "\n" +
-                @"}";
-                body = body.Replace("cedula", idPayer);
-                request.AddParameter("application/json", body, ParameterType.RequestBody);
-                IRestResponse response = client.Execute(request);
+                client = new HttpClient();
+                client.BaseAddress = new Uri(basseAddress);
 
-                return response.Content;
+                var request = JsonConvert.SerializeObject(idPayer);
+                var content = new StringContent(request, Encoding.UTF8, "Application/json");
+                var url = Utilities.GetConfiguration("GetPayerDocument");
+
+                var response = await client.PostAsync(url, content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                var result = await response.Content.ReadAsStringAsync();
+                var responseApi = JsonConvert.DeserializeObject<ResponseGetPayerDocument>(result);
+
+         //       var data = JsonConvert.DeserializeObject<DataPayerDocument>(responseApi.data.ToString());
+
+                if (responseApi.codeError == 200)
+                {
+                    return responseApi;
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, ex.ToString());
+            }
+            return null;
+        }
+
+        public async Task<ResponseSetPoints> SetPayerPoints(RequestSetPayerPoints idPayer)
+        {
+            try
+            {
+                client = new HttpClient();
+                client.BaseAddress = new Uri(basseAddress);
+
+                var request = JsonConvert.SerializeObject(idPayer);
+                var content = new StringContent(request, Encoding.UTF8, "Application/json");
+                var url = Utilities.GetConfiguration("SetPayerPoints");
+
+                var response = await client.PostAsync(url, content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                var result = await response.Content.ReadAsStringAsync();
+                var responseApi = JsonConvert.DeserializeObject<ResponseSetPoints>(result);
+
+                //       var data = JsonConvert.DeserializeObject<DataPayerDocument>(responseApi.data.ToString());
+
+                if (responseApi.codeError == 200)
+                {
+                    return responseApi;
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, ex.ToString());
+            }
+            return null;
+        }
+
+        public async Task<ResponseSetPoints> SetPayer(RequestSetPayerData idPayer)
+        {
+            try
+            {
+                client = new HttpClient();
+                client.BaseAddress = new Uri(basseAddress);
+
+                var request = JsonConvert.SerializeObject(idPayer);
+                var content = new StringContent(request, Encoding.UTF8, "Application/json");
+                var url = Utilities.GetConfiguration("SetPayer");
+
+                var response = await client.PostAsync(url, content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                var result = await response.Content.ReadAsStringAsync();
+                var responseApi = JsonConvert.DeserializeObject<ResponseSetPoints>(result);
+
+                //       var data = JsonConvert.DeserializeObject<DataPayerDocument>(responseApi.data.ToString());
+
+                if (responseApi.codeError == 200)
+                {
+                    return responseApi;
+                }
             }
             catch (Exception ex)
             {

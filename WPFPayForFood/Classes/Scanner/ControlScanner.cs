@@ -37,7 +37,7 @@ namespace WPFPayForFood.Classes.Scanner
             {
                 if (_BarcodeReader != null)
                 {
-                    InitializePortBarcode(AdminPayPlus.DataPayPlus.PayPadConfiguration.scanneR_PORT, 9600);
+                    InitializePortBarcode("COM10", 9600);
                 }
             }
             catch (Exception ex)

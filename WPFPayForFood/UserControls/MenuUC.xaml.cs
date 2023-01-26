@@ -38,13 +38,24 @@ namespace WPFPayForFood.UserControls
         #endregion
 
         #region "Constructor"
-        public MenuUC()
+        public MenuUC(Transaction transaction)
         {
             InitializeComponent();
             view = new CollectionViewSource();
             lstPager = new ObservableCollection<Restaurants>();
-            transaction = new Transaction();
-            GetRestaurants();
+      
+
+            if(transaction == null)
+            {
+                this.transaction = new Transaction();
+               GetRestaurants();
+            }
+            else
+            {
+                this.transaction = transaction;
+            }
+
+
             InitView();
         }
         #endregion
@@ -116,19 +127,50 @@ namespace WPFPayForFood.UserControls
             }
         }
 
-        private void SearchMenu(int idRestaurant)
+        private async void GetRestaurants()
         {
             try
             {
                 Task.Run(async () =>
                 {
-                    transaction.lstComidas = await AdminPayPlus.apiIntegration.SearchMenu(idRestaurant);
+                    transaction.LstRestaurantes = await AdminPayPlus.apiIntegration.GetRestaurantes();
+
+                    Utilities.CloseModal();
+
+                    if (transaction.LstRestaurantes == null)
+                    {
+                        Utilities.ShowModal("Ha ocurrido un error al consultar el menú. Por favor intenta de nuevo.", EModalType.Error);
+                        Utilities.navigator.Navigate(UserControlView.Main, true);
+                    }
+                    //else
+                    //{
+                    //    Utilities.navigator.Navigate(UserControlView.Menu, transaction);
+                    //}
+                });
+                //     ObtenerRestaurantes();
+
+                Utilities.ShowModal(MessageResource.LoadInformation, EModalType.Preload);
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, ex.ToString());
+            }
+        }
+
+        private void SearchMenu(int idRestaurant)
+        {
+            try
+            {
+                Task.Run(() =>
+                {
+                    transaction.lstComidas =  AdminPayPlus.apiIntegration.SearchMenu(idRestaurant).GetAwaiter().GetResult();
 
                     Utilities.CloseModal();
 
                     if (transaction.lstComidas == null)
                     {
-                        Utilities.ShowModal("Ha ocurrido un error al consultar el menú. Por favor intenta de nuevo.", EModalType.Error, this);
+                        Utilities.ShowModal("Ha ocurrido un error al consultar el menú. Por favor intenta de nuevo.", EModalType.Error);
+                        Utilities.navigator.Navigate(UserControlView.Main,true);
                     }
                     else
                     {
@@ -136,7 +178,7 @@ namespace WPFPayForFood.UserControls
                     }
                 });
 
-                Utilities.ShowModal(MessageResource.LoadInformation, EModalType.Preload, this);
+                Utilities.ShowModal(MessageResource.LoadInformation, EModalType.Preload);
             }
             catch (Exception ex)
             {
@@ -144,34 +186,7 @@ namespace WPFPayForFood.UserControls
             }
         }
 
-        private async void GetRestaurants()
-        {
-            try
-            {
-                //Task.Run(async () =>
-                //{
-                //    transaction.LstRestaurantes = await AdminPayPlus.apiIntegration.GetRestaurantes();
-
-                //    Utilities.CloseModal();
-
-                //    if (transaction.LstRestaurantes == null)
-                //    {
-                //        Utilities.ShowModal("Ha ocurrido un error al consultar el menú. Por favor intenta de nuevo.", EModalType.Error, this);
-                //    }
-                //    else
-                //    {
-                //        //Utilities.navigator.Navigate(UserControlView.Products, transaction);
-                //    }
-                //});
-                ObtenerRestaurantes();
-
-                Utilities.ShowModal(MessageResource.LoadInformation, EModalType.Preload, this);
-            }
-            catch (Exception ex)
-            {
-                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, ex.ToString());
-            }
-        }
+       
 
         private async Task ObtenerRestaurantes()
         {
@@ -234,5 +249,19 @@ namespace WPFPayForFood.UserControls
             GC.Collect();
         }
         #endregion
+
+        private void Select_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                int restaurant = Convert.ToInt32((sender as Image).Tag);
+
+                SearchMenu(restaurant);
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, ex.ToString());
+            }
+        }
     }
 }

@@ -65,7 +65,7 @@
                     VerticalAlignment="Bottom"
                     Margin="313,0,0,-1629"
                     Stretch="Uniform"
-                    TouchDown="btnCarrito_TouchDown" Width="470"
+                    TouchDown="btnCarrito_TouchDown" Width="470" MouseDown="btnCarrito_MouseDown"
                 />
             </Grid>
             <Grid Margin="0,0,0,0">
@@ -109,8 +109,7 @@
                     FontSize="25"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Left"
-                                        Visibility="Hidden"
-
+                    Visibility="Hidden"
                     Margin="55,0,0,0"
                     Foreground="Black" Grid.ColumnSpan="3"
                 />
@@ -216,7 +215,7 @@
                                     VerticalAlignment="Center"
                                     Margin="0,0,0,-150"
                                     Stretch="Uniform"
-                                    TouchDown="Agregar_TouchDown"
+                                    TouchDown="Agregar_TouchDown" MouseDown="Agregar_MouseDown"
                                 />
 
                             </Grid>

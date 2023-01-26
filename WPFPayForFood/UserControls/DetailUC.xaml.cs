@@ -52,7 +52,7 @@ namespace WPFPayForFood.UserControls
 
                         if (this.transaction.IdTransactionAPi == 0)
                         {
-                            Utilities.ShowModal("", EModalType.Error, this);
+                            Utilities.ShowModal("", EModalType.Error);
                             Utilities.navigator.Navigate(UserControlView.Main);
                         }
                         else
@@ -60,7 +60,7 @@ namespace WPFPayForFood.UserControls
                             Utilities.navigator.Navigate(UserControlView.Pay, false, transaction);
                         }
                     });
-                    Utilities.ShowModal(MessageResource.LoadInformation, EModalType.Preload, this);
+                    Utilities.ShowModal(MessageResource.LoadInformation, EModalType.Preload);
                 }
                 else
                 {

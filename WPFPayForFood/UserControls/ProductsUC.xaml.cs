@@ -84,7 +84,7 @@ namespace WPFPayForFood.UserControls
                     {
                         transaction.Amount = Math.Ceiling(modal.Amount);
 
-                        if (Utilities.ShowModal("Desea acumular puntos para adquirir descuentos en sus compras?", EModalType.Information, this))
+                        if (Utilities.ShowModal("Desea acumular puntos para adquirir descuentos en sus compras?", EModalType.Information))
                         {
                             Utilities.navigator.Navigate(UserControlView.UserPoints, transaction);
                         } else
@@ -109,7 +109,7 @@ namespace WPFPayForFood.UserControls
                 Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, ex.ToString());
             }
         }
-
+        
         private void Agregar_TouchDown(object sender, TouchEventArgs e)
         {
             try
@@ -127,10 +127,10 @@ namespace WPFPayForFood.UserControls
                 {
                     var product = transaction.productos.FirstOrDefault(p => p.iD_PRODUCTO == comida.iD_PRODUCTO);
 
-                    if (product == null)
-                    {
+                    //if (product == null)
+                    //{
                         transaction.productos.Add(foodW.ProductsSelects);
-                    }
+                    //}
                 }
             }
             catch (Exception ex)
@@ -149,6 +149,75 @@ namespace WPFPayForFood.UserControls
             Utilities.navigator.Navigate(UserControlView.Main);
         }
         #endregion
-    }
 
+        private void Agregar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var comida = (sender as Image).DataContext as Datum;
+
+                transaction.ComidaSelect = comida;
+
+                this.Opacity = 0.3;
+                DetailFoodW foodW = new DetailFoodW(transaction);
+                foodW.ShowDialog();
+                this.Opacity = 1;
+
+                if (foodW.DialogResult.HasValue && foodW.DialogResult.Value)
+                {
+                    var product = transaction.productos.FirstOrDefault(p => p.iD_PRODUCTO == comida.iD_PRODUCTO);
+
+                    //if (product == null)
+                    //{
+                    transaction.productos.Add(foodW.ProductsSelects);
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, ex.ToString());
+            }
+        }
+
+        private void btnCarrito_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                this.Opacity = 0.3;
+                BasketPay modal = new BasketPay(transaction.productos);
+                modal.ShowDialog();
+
+                if (modal.DialogResult.HasValue && modal.DialogResult.Value)
+                {
+                    if (modal.Amount > 0 && transaction.productos.Count() > 0)
+                    {
+                        transaction.Amount = Math.Ceiling(modal.Amount);
+
+                        if (Utilities.ShowModal("Desea acumular puntos para adquirir descuentos en sus compras?", EModalType.Information))
+                        {
+                            Utilities.navigator.Navigate(UserControlView.UserPoints, transaction);
+                        }
+                        else
+                        {
+                            Utilities.navigator.Navigate(UserControlView.Pay, transaction);
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (modal.clear)
+                    {
+                        transaction.productos = new List<Datum>();
+                    }
+                }
+
+                this.Opacity = 1;
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, ex.ToString());
+            }
+        }
+    }
 }

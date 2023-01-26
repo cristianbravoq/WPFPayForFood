@@ -54,7 +54,7 @@ namespace WPFPayForFood.Classes
             }
         }
 
-        public static bool ShowModal(string message, EModalType type, UserControl uc, bool timer = false)
+        public static bool ShowModal(string message, EModalType type, bool timer = false)
         {
             bool response = false;
 
@@ -88,7 +88,7 @@ namespace WPFPayForFood.Classes
 
                 Application.Current.Dispatcher.Invoke(delegate
                 {
-                    uc.Opacity = 0.3;
+               //     uc.Opacity = 0.3;
                     modal = new ModalW(model);
                     modal.ShowDialog();
 
@@ -96,7 +96,7 @@ namespace WPFPayForFood.Classes
                     {
                         response = true;
                     }
-                    uc.Opacity = 1;
+          //          uc.Opacity = 1;
                 });
             }
             catch (Exception ex)
@@ -215,7 +215,11 @@ namespace WPFPayForFood.Classes
                         new DataPrinter{ brush = color, font = fontKey,   value =  "Valor Ingresado", x = xKey, y = y+=sum },
                         new DataPrinter{ brush = color, font = fontValue, value =  String.Format("{0:C0}", transaction.Payment.ValorIngresado), x = x, y = y },
                         new DataPrinter{ brush = color, font = fontKey,   value =  "Valor Devuelto", x = xKey, y = y+=sum },
-                        new DataPrinter{ brush = color, font = fontValue, value =  String.Format("{0:C0}", transaction.Payment.ValorDispensado), x = x, y = y },
+                        new DataPrinter{ brush = color, font = fontValue, value =  String.Format("{0:C0}", transaction.Payment.ValorSobrante), x = x, y = y },
+
+
+                        new DataPrinter{ brush = color, font = fontKey,   value =  "Puntos", x = xKey, y = y+=sum },
+                        new DataPrinter{ brush = color, font = fontValue, value =  String.Format("{0:C0}", transaction.UserPoints > 0 ? transaction.UserPoints : 0), x = x, y = y },
 
                         new DataPrinter{ brush = color, font = fontKey,   value = "========================================", x = xKey, y = y+=sum },
 

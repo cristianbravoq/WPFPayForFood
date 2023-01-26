@@ -179,7 +179,7 @@
                                             HorizontalAlignment="Center"
                                             Foreground="Black"
                                         />
-                            <ListView 
+                            <ListView
                                             HorizontalAlignment="Center" 
                                             VerticalAlignment="Center"
                                             ItemsSource="{Binding recetas}"

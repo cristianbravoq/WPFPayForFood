@@ -39,6 +39,7 @@ namespace WPFPayForFood.UserControls
             try
             {
                 ValueReturn = transaction.Payment.ValorIngresado - transaction.Payment.ValorDispensado;
+                transaction.Payment.ValorDispensado = transaction.Amount;
 
                 txtValueReturn.Text = string.Format("{0:C0}", ValueReturn);
                 Task.Run(() =>

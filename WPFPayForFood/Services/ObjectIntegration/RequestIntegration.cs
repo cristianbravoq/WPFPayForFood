@@ -30,6 +30,14 @@ namespace WPFPayForFood.Services.ObjectIntegration
         public string points { get; set; }
     }
 
+    public class RequestSetPayerData
+    {
+        public string email { get; set; }
+        public string cel { get; set; }
+        public int idPayer { get; set; }
+    }
+
+
     public class RequestGetPayer
     {
         public string iD_PAYER { get; set; }
@@ -37,7 +45,7 @@ namespace WPFPayForFood.Services.ObjectIntegration
 
     public class RequestGetPayerDocument
     {
-        public string documentO_ID { get; set; }
+        public int documentO_ID { get; set; }
     }
 
     public class PagadorObtenido
@@ -55,5 +63,19 @@ namespace WPFPayForFood.Services.ObjectIntegration
         public string documentO_ID { get; set; }
         public string fechA_NACIMIENTO { get; set; }
         public string points { get; set; }
+    }
+
+    public class RequestSetPayerPoints
+    {
+        public string Documento { get; set; }
+
+        public string Points { get; set; }
+    }
+
+    public class ResponseSetPoints
+    {
+        public int codeError { get; set; }
+        public string message { get; set; }
+        public object data { get; set; }
     }
 }

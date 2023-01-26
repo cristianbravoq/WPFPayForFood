@@ -117,7 +117,7 @@
                                     Margin="0,0,0,0"
                                     Tag="{Binding idRestaurant}"
                                     Stretch="Uniform"
-                                    TouchDown="Select_TouchDown"
+                                    TouchDown="Select_TouchDown" MouseDown="Select_MouseDown"
                                 />
                             </Grid>
                         </StackPanel>

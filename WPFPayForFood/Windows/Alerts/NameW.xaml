@@ -23,7 +23,7 @@
         </Grid.Background>
         <TextBlock
                 HorizontalAlignment="Center"
-                Text="Ingresa los siguientes datos para registrar el pedido."
+                Text="Ingresa el numero de telefono para tener la informacion del pedido."
                 FontFamily="Gotham"
                 TextWrapping="Wrap"
                 TextAlignment="Center"
@@ -31,7 +31,7 @@
                 Margin="0,92,0,0"
                 Foreground="#FF0F1626"
                 FontWeight="SemiBold"
-                FontSize="35" Height="90" Width="454"
+                FontSize="35" Height="134" Width="454"
             />
         <TextBox 
                 Name="txtName"
@@ -42,9 +42,10 @@
                 VerticalAlignment="Top"
                 FontFamily="Arial"
                 FontWeight="Medium"
-                Margin="0,323,0,0"
+                Margin="0,299,0,0"
                 HorizontalContentAlignment="Center"
                 FontSize="40"
+                Visibility="Hidden"
                 Width="500"
                 Foreground="Gray"
                 BorderBrush="#FF1D1B1B"
@@ -57,7 +58,7 @@
                 md:HintAssist.IsFloating="True"
                 md:HintAssist.FloatingScale="0.5"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
+                VerticalAlignment="Top"
                 FontFamily="Arial"
                 FontWeight="Medium"
                 HorizontalContentAlignment="Center"
@@ -65,7 +66,7 @@
                 Width="500"
                 Foreground="Gray"
                 BorderBrush="#FF1D1B1B"
-                TouchDown="TxtCorreo_TouchDown"
+                TouchDown="TxtCorreo_TouchDown" Margin="0,395,0,0"
             />
 
         <TextBox 
@@ -82,7 +83,7 @@
                 Width="500"
                 Foreground="Gray"
                 BorderBrush="#FF1D1B1B"
-                TouchDown="TxtNum_TouchDown" Margin="0,585,0,0"
+                TouchDown="TxtNum_TouchDown" Margin="0,566,0,0"
             />
         <Image 
                 x:Name="btnaceptar"

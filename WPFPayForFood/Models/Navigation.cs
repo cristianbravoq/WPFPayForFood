@@ -46,7 +46,7 @@ namespace WPFPayForFood.Models
                         View = new MainUC();
                         break;
                     case UserControlView.Menu:
-                        View = new MenuUC();
+                        View = new MenuUC((Transaction)data);
                         break;     
                     case UserControlView.Products:
                         View = new ProductsUC((Transaction)data);

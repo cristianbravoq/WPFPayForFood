@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WPFPayForFood.Classes;
+using WPFPayForFood.Models;
 using WPFPayForFood.Resources;
 using WPFPayForFood.Services.Object;
 
@@ -21,6 +22,7 @@ namespace WPFPayForFood.UserControls
         #region "Referencias"
         private ImageSleader _imageSleader;
         private bool _validatePaypad;
+        public Transaction transaction;
         #endregion
 
         #region "Constructor"
@@ -29,6 +31,10 @@ namespace WPFPayForFood.UserControls
             InitializeComponent();
 
             _validatePaypad = validatePaypad;
+
+            transaction = new Transaction();
+
+            
 
             Init();
         }
@@ -50,19 +56,51 @@ namespace WPFPayForFood.UserControls
             }
         }
 
+        private async void GetRestaurants()
+        {
+            try
+            {
+                Task.Run(async () =>
+                {
+                    transaction.LstRestaurantes = await AdminPayPlus.apiIntegration.GetRestaurantes();
+
+                    Utilities.CloseModal();
+
+                    if (transaction.LstRestaurantes == null)
+                    {
+                        Utilities.ShowModal("Ha ocurrido un error al consultar el menú. Por favor intenta de nuevo.", EModalType.Error);
+                        Utilities.navigator.Navigate(UserControlView.Main, true);
+                    }
+                    else
+                    {
+                        Utilities.navigator.Navigate(UserControlView.Menu, transaction);
+                    }
+                });
+                //     ObtenerRestaurantes();
+
+                Utilities.ShowModal(MessageResource.LoadInformation, EModalType.Preload);
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, ex.ToString());
+            }
+        }
+
         private void InitValidation()
         {
             try
             {
-                Task.Run(() =>
-                {
-                    while (_validatePaypad)
-                    {
-                        AdminPayPlus.ValidatePaypad();
+                //Task.Run(() =>
+                //{
+                //    while (_validatePaypad)
+                //    {
+                //        AdminPayPlus.ValidatePaypad();
 
-                        Thread.Sleep(int.Parse(Utilities.GetConfiguration("DurationAlert")));
-                    }
-                });
+                //        Thread.Sleep(int.Parse(Utilities.GetConfiguration("DurationAlert")));
+                //    }
+                //});
+
+         //       Redirect();
             }
             catch (Exception ex)
             {
@@ -101,7 +139,7 @@ namespace WPFPayForFood.UserControls
             {
                 if (AdminPayPlus.DataPayPlus.StateUpdate)
                 {
-                    Utilities.ShowModal(MessageResource.UpdateAplication, EModalType.Error, this, true);
+                    Utilities.ShowModal(MessageResource.UpdateAplication, EModalType.Error, true);
                     Utilities.UpdateApp();
                 }
                 else if (AdminPayPlus.DataPayPlus.StateBalanece)
@@ -153,7 +191,7 @@ namespace WPFPayForFood.UserControls
                     //}
                     //else
                     //{
-                    Redirect();
+                  //  Redirect();
                     //}
                 }
                 else
@@ -166,7 +204,7 @@ namespace WPFPayForFood.UserControls
                         Date = DateTime.Now
                     }, ELogType.General);
 
-                    Utilities.ShowModal(MessageResource.NoService + " " + MessageResource.NoMoneyKiosco, EModalType.Error, this, true);
+                    Utilities.ShowModal(MessageResource.NoService + " " + MessageResource.NoMoneyKiosco, EModalType.Error, true);
                 }
             }
             catch (Exception ex)
@@ -204,13 +242,15 @@ namespace WPFPayForFood.UserControls
         #region "Eventos"
         private void Next_TouchDown(object sender, TouchEventArgs e)
         {
-            ValidateStatus();
+            Redirect();
         }
         #endregion
 
         private void siguientePantalla(object sender, MouseButtonEventArgs e)
         {
-            ValidateStatus();
+            //   ValidateStatus();
+            GetRestaurants();
+
         }
     }
 }

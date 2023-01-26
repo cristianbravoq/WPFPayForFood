@@ -88,10 +88,13 @@ namespace WPFPayForFood.Services.ObjectIntegration
         public string imagen { get; set; }
 
         public string descripcion { get; set; }
+
         public int cantidad { get; set; }
+
         public int stock { get; set; }
 
         public bool disponible { get; set; }
+
         public string comentarios { get; set; }
 
         public List<Categoria> categorias { get; set; }
@@ -157,6 +160,24 @@ namespace WPFPayForFood.Services.ObjectIntegration
         public int codeError { get; set; }
         public string message { get; set; }
         public int data { get; set; }
+    }
+
+    public class ResponseGetPayerDocument
+    {
+        public int codeError { get; set; }
+        public string message { get; set; }
+        public List<DataPayerDocument> data { get; set; }
+    }
+
+    public class DataPayerDocument
+    {
+        public string payer { get; set; }
+        public string email { get; set; }
+        public string cel { get; set; }
+        public int iD_PAYER { get; set; }
+        public string documentO_ID { get; set; }
+        public string fechA_NACIMIENTO { get; set; }
+        public string points { get; set; }
     }
 
 

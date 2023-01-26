@@ -43,7 +43,7 @@ namespace WPFPayForFood.UserControls
 
         #region "Métodos"
 
-        private void SaveUserPoints(List<String> res)
+        private async void SaveUserPoints(List<String> res)
         {
             if (Validate(res[1]))
             {
@@ -54,16 +54,38 @@ namespace WPFPayForFood.UserControls
                     cel = res[2],
                     documentO_ID = res[3],
                     fechA_NACIMIENTO = res[4],
-                    points = res[5]
+                    points = "0"
                 };
 
                 transaction.PayerDocument = res[3];
 
-                var Response = AdminPayPlus.apiIntegration.CreatePayer(Request);
+                RequestGetPayerDocument _payer = new RequestGetPayerDocument
+                {
+                    documentO_ID = Int32.Parse(res[3])
+                };
 
-                transaction.UserPoints = res[5];
+                var userByDocument = await AdminPayPlus.apiIntegration.GetPayerDocument(_payer);
+
+        //        var carro = "carro";
+
+                if(userByDocument.data.Count > 0)
+                {
+                    transaction.Document = Request.documentO_ID;
+                    transaction.DataPayer = userByDocument.data[0];
+                    
+                    transaction.UserPoints = Convert.ToInt32(userByDocument.data[0].points);
+                    Utilities.navigator.Navigate(UserControlView.Pay, transaction);
+                }
+                else
+                {
+                    transaction.Document = Request.documentO_ID;
+                    var Response = await AdminPayPlus.apiIntegration.CreatePayer(Request);
+                    transaction.auxId = Response.data;
+                    Utilities.navigator.Navigate(UserControlView.Pay, transaction);
+                }
+
+                //   transaction.UserPoints = res[5];
                 //Navegar al pago
-                Utilities.navigator.Navigate(UserControlView.Pay, transaction);
 
                 //IDPayer = Response.Result.data;
                 //DialogResult = true;

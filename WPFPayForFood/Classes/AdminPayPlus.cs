@@ -444,12 +444,12 @@ namespace WPFPayForFood.Classes
             {
                 if (transaction != null)
                 {
-                    bool response = await CreateConsecutivoDashboard(transaction);
+                    //bool response = await CreateConsecutivoDashboard(transaction);
 
-                    if (!response)
-                    {
-                        return;
-                    }
+                    //if (!response)
+                    //{
+                    //    return;
+                    //}
 
                     transaction.IsReturn = await ValidateMoney(transaction);
 
@@ -469,9 +469,10 @@ namespace WPFPayForFood.Classes
                     {
                         var data = new TRANSACTION
                         {
-                            TYPE_TRANSACTION_ID = Convert.ToInt32(transaction.Type),
+                            //TYPE_TRANSACTION_ID = Convert.ToInt32(transaction.Type),
                             PAYER_ID = transaction.payer.PAYER_ID,
                             STATE_TRANSACTION_ID = Convert.ToInt32(transaction.State),
+                            TYPE_TRANSACTION_ID = 1,
                             TOTAL_AMOUNT = transaction.Amount,
                             DATE_END = DateTime.Now,
                             TRANSACTION_ID = 0,
@@ -489,7 +490,7 @@ namespace WPFPayForFood.Classes
                         {
                             AMOUNT = transaction.Amount,
                             TRANSACTION_ID = data.ID,
-                            TRANSACTION_PRODUCT_ID = 0,//id_product
+                            TRANSACTION_PRODUCT_ID = 29,//id_product
                             DESCRIPTION = "",
                             EXTRA_DATA = "",
                             TRANSACTION_DESCRIPTION_ID = 0,

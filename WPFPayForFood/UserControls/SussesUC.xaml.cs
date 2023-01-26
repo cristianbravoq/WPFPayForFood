@@ -43,9 +43,10 @@ namespace WPFPayForFood.UserControls
                         AdminPayPlus.SaveErrorControl(transaction.Observation, "", EError.Device, ELevelError.Medium);
                     }
 
-                    //AdminPayPlus.UpdateTransaction(this.transaction);
-
                     transaction.StatePay = "Aprobado";
+                    transaction.State = ETransactionState.Success;
+
+                    AdminPayPlus.UpdateTransaction(this.transaction);
 
                     Utilities.PrintVoucher(this.transaction);
 

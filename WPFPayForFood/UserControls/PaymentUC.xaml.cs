@@ -54,11 +54,13 @@ namespace WPFPayForFood.UserControls
         #region Métodos
         private void OrganizeValues()
         {
+
+            SendData();
             try
             {
                 this.paymentViewModel = new PaymentViewModel
                 {
-                    UserPoints = transaction.UserPoints,
+                    UserPoints = transaction.UserPoints.ToString(),
                     PayValue = transaction.Amount,
                     ValorFaltante = transaction.Amount,
                     ImgContinue = Visibility.Hidden,
@@ -84,24 +86,19 @@ namespace WPFPayForFood.UserControls
 
         private void GetPayerPoints(string res)
         {
-            //RequestGetPayerDocument _payer = new RequestGetPayerDocument
+            
+            //var Response = AdminPayPlus.apiIntegration.GetPayerDocument(_payer);
+
+            //if (Response != null)
             //{
-            //    documentO_ID = res
-            //};
-            string _payer = res;
+            //    var pagador = Response.Result.ToString();
 
-            var Response = AdminPayPlus.apiIntegration.GetPayerDocument(_payer);
+            //    string[] subs = pagador.Split(@Separator);
 
-            if (Response != null)
-            {
-                var pagador = Response.Result.ToString();
+            //    var auxiliar = pagador.Substring(0, 3);
 
-                string[] subs = pagador.Split(@Separator);
-
-                var auxiliar = pagador.Substring(0, 3);
-
-                transaction.UserPoints = Response.ToString();
-            }
+            //    transaction.UserPoints = Response.ToString();
+            //}
 
             //transaction.UserPoints =  Response.ToString();
         }
@@ -180,6 +177,7 @@ namespace WPFPayForFood.UserControls
                     if (state)
                     {
                         transaction.StateReturnMoney = true;
+                        transaction.AmountToReturn = totalOut;
                         paymentViewModel.ValorDispensado = totalOut;
                         SavePay();
                     }
@@ -207,7 +205,7 @@ namespace WPFPayForFood.UserControls
                         else
                         {
                             transaction.Observation += MessageResource.IncompleteMony + " " + "Devolvio: " + valueOut.ToString();
-                            Utilities.ShowModal(MessageResource.IncompleteMony, EModalType.Error, this);
+                            //Utilities.ShowModal(MessageResource.IncompleteMony, EModalType.Error);
                             SavePay(ETransactionState.Error);
                         }
                     }
@@ -253,8 +251,24 @@ namespace WPFPayForFood.UserControls
                     Application.Current.Dispatcher.Invoke(delegate
                     {
                         this.Opacity = 0.3;
+
+                        if(transaction.DataPayer == null)
+                        {
+                            DataPayerDocument Request = new DataPayerDocument
+                            {
+                                payer = "-",
+                                iD_PAYER = 0,
+                                email = "-",
+                                cel = "-",
+                                documentO_ID = "-",
+                                fechA_NACIMIENTO = "-",
+                                points = "-"
+                            };
+                            transaction.DataPayer = Request;
+                        }
+
                         NameW modal = new 
-                        NameW();
+                        NameW(transaction.auxId);
                         modal.ShowDialog();
                         this.Opacity = 1;
 
@@ -292,15 +306,20 @@ namespace WPFPayForFood.UserControls
                                 transaction.reference = response.data;
                                 transaction.statePaySuccess = true;
                                 transaction.State = ETransactionState.Success;
+                                UpdatePoints();
+
                                 Utilities.navigator.Navigate(UserControlView.PaySuccess, transaction);
                             }
                             else
                             {
+                                transaction.statePaySuccess = false;
+                                transaction.State = ETransactionState.CancelError;
+                                SendData();
                                 CancelTransaction();
                             }
                         });
 
-                        Utilities.ShowModal("Creando órden. Esperá un momento por favor.", EModalType.Preload, this);
+                        Utilities.ShowModal("Creando órden. Esperá un momento por favor.", EModalType.Preload);
                     });
                  }
             }
@@ -311,12 +330,27 @@ namespace WPFPayForFood.UserControls
             }
         }
 
+        private async void UpdatePoints()
+        {
+            var auxPoints = transaction.Amount / 1000;
+
+            transaction.UserPoints += Convert.ToInt32(auxPoints);
+
+            RequestSetPayerPoints updatePoints = new RequestSetPayerPoints()
+            {
+                    Documento = transaction.Document,
+                    Points = transaction.UserPoints.ToString()
+            };
+
+            var setPoints = await AdminPayPlus.apiIntegration.SetPayerPoints(updatePoints);
+        }
+
         private void CancelTransaction()
         {
             try
             {
                 string ms = "Estimado usuario, no se pudo notificar el pago. Se le hará la devolución del dinero ingresado.";
-                Utilities.ShowModal(ms, EModalType.Error, this);
+                Utilities.ShowModal(ms, EModalType.Error);
                 Utilities.navigator.Navigate(UserControlView.ReturnMony, transaction);
             }
             catch (Exception ex)
@@ -333,7 +367,7 @@ namespace WPFPayForFood.UserControls
 
                 this.paymentViewModel.ImgCancel = Visibility.Hidden;
 
-                if (Utilities.ShowModal(MessageResource.CancelTransaction, EModalType.Information, this))
+                if (Utilities.ShowModal(MessageResource.CancelTransaction, EModalType.Information))
                 {
                     AdminPayPlus.ControlPeripherals.StopAceptance();
                     AdminPayPlus.ControlPeripherals.callbackLog = null;
@@ -356,7 +390,6 @@ namespace WPFPayForFood.UserControls
                     {
                         this.paymentViewModel.ImgContinue = Visibility.Visible;
                     }
-
                     this.paymentViewModel.ImgCancel = Visibility.Visible;
                 }
             }
@@ -365,6 +398,43 @@ namespace WPFPayForFood.UserControls
                 Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, ex.ToString());
             }
         }
+
+        private async void SendData()
+        {
+            try
+            {
+                if (transaction.Amount > 0)
+                {
+                    Task.Run(async () =>
+                    {
+                        transaction.State = ETransactionState.Initial;
+                        await AdminPayPlus.SaveTransaction(transaction);
+
+                        Utilities.CloseModal();
+
+                        if (this.transaction.IdTransactionAPi == 0)
+                        {
+                            Utilities.ShowModal("", EModalType.Error);
+                            Utilities.navigator.Navigate(UserControlView.Main);
+                        }
+                        else
+                        {
+                            //Utilities.navigator.Navigate(UserControlView.Pay, false, transaction);
+                        }
+                    });
+                    Utilities.ShowModal(MessageResource.LoadInformation, EModalType.Preload);
+                }
+                else
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, ex.ToString());
+            }
+        }
+
         #endregion
     }
 }

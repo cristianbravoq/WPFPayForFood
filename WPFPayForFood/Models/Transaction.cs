@@ -40,7 +40,7 @@ namespace WPFPayForFood.Models
 
         public string Observation { get; set; }
 
-        public string UserPoints { get; set; }
+        public int UserPoints { get; set; }
 
         public string PayerDocument { get; set; }
 
@@ -50,11 +50,15 @@ namespace WPFPayForFood.Models
 
         public bool statePaySuccess { get; set; }
 
+        public int auxId { get; set; }
+
         public PAYER payer { get; set; }
 
         public int StateNotification { get; set; }
 
         public decimal AmountToReturn { get; set; }
+
+        public DataPayerDocument DataPayer { get; set; }
 
 
 
