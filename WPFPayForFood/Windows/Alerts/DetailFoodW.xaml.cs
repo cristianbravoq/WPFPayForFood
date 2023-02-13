@@ -79,8 +79,6 @@ namespace WPFPayForFood.Windows.Alerts
                 {
                     view.Source = null;
                 }
-
-           
             }
             catch (Exception ex)
             {
@@ -183,6 +181,7 @@ namespace WPFPayForFood.Windows.Alerts
                         txtCount.Text = count.ToString();
                     }
                 }
+
             }
             catch (Exception ex)
             {

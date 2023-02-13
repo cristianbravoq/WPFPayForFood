@@ -65,7 +65,7 @@
                     VerticalAlignment="Bottom"
                     Margin="313,0,0,-1629"
                     Stretch="Uniform"
-                    TouchDown="btnCarrito_TouchDown" Width="470" MouseDown="btnCarrito_MouseDown"
+                    TouchDown="btnCarrito_TouchDown" Width="470"
                 />
             </Grid>
             <Grid Margin="0,0,0,0">
@@ -123,9 +123,9 @@
                     Margin="55,0,0,0" Grid.ColumnSpan="3"
                 />
             </Grid>
-            <ListView 
+            <ListView
                 x:Name="lv_Products"
-                HorizontalAlignment="Center" 
+                HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 ItemsSource="{Binding}"
                 Margin="0,50,0,0"

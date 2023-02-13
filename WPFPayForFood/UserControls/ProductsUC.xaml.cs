@@ -59,7 +59,8 @@ namespace WPFPayForFood.UserControls
                 if (lstPager.Count > 0)
                 {
                     view.Source = lstPager;
-                    lv_Products.DataContext = view;
+                    var auxList = view.Source;
+                    lv_Products.DataContext = auxList;
                 }
             }
             catch (Exception ex)
@@ -172,47 +173,6 @@ namespace WPFPayForFood.UserControls
                     transaction.productos.Add(foodW.ProductsSelects);
                     //}
                 }
-            }
-            catch (Exception ex)
-            {
-                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, ex.ToString());
-            }
-        }
-
-        private void btnCarrito_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                this.Opacity = 0.3;
-                BasketPay modal = new BasketPay(transaction.productos);
-                modal.ShowDialog();
-
-                if (modal.DialogResult.HasValue && modal.DialogResult.Value)
-                {
-                    if (modal.Amount > 0 && transaction.productos.Count() > 0)
-                    {
-                        transaction.Amount = Math.Ceiling(modal.Amount);
-
-                        if (Utilities.ShowModal("Desea acumular puntos para adquirir descuentos en sus compras?", EModalType.Information))
-                        {
-                            Utilities.navigator.Navigate(UserControlView.UserPoints, transaction);
-                        }
-                        else
-                        {
-                            Utilities.navigator.Navigate(UserControlView.Pay, transaction);
-                        }
-
-                    }
-                }
-                else
-                {
-                    if (modal.clear)
-                    {
-                        transaction.productos = new List<Datum>();
-                    }
-                }
-
-                this.Opacity = 1;
             }
             catch (Exception ex)
             {

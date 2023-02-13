@@ -134,13 +134,10 @@
              Background="Transparent"
              BorderBrush="Transparent"
              AutomationProperties.AutomationId="ItemGridView"
-             AutomationProperties.Name="Grouped Items" Height="1166" Width="906" Margin="0,513,0,0" 
+             AutomationProperties.Name="Grouped Items" Height="1150" Width="906" Margin="0,513,0,0" 
                             >
             <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}"
-                        >
-                    <!--<EventSetter Event="TouchDown"
-                         Handler="ListViewItem_TouchDown" />-->
+                <Style TargetType="{x:Type ListViewItem}" >
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="ListViewItem">
@@ -151,17 +148,17 @@
                     </Setter>
                 </Style>
             </ListView.ItemContainerStyle>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="1"
-                                 HorizontalAlignment="Center"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+            <!--<ItemsControl.ItemsPanel>-->
+                <!--<ItemsPanelTemplate>-->
+                    <!--<UniformGrid Columns="1" HorizontalAlignment="Center" />-->
+                <!--</ItemsPanelTemplate>-->
+            <!--</ItemsControl.ItemsPanel>-->
+            
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel 
                                     Orientation="Horizontal" 
-                                    VerticalAlignment="Stretch" 
+                                    VerticalAlignment="Top" 
                                     HorizontalAlignment="Stretch">
                         <Grid 
                                         HorizontalAlignment="Center"
@@ -180,20 +177,16 @@
                                             Foreground="Black"
                                         />
                             <ListView
-                                            HorizontalAlignment="Center" 
-                                            VerticalAlignment="Center"
-                                            ItemsSource="{Binding recetas}"
-                                            Margin="0,60,0,0"
-                                            Background="Transparent"
-                                            BorderBrush="Transparent"
-                                            AutomationProperties.AutomationId="ItemGridView"
-                                            AutomationProperties.Name="Grouped Items"
-                                            >
+                                 HorizontalAlignment="Center" 
+                                 VerticalAlignment="Top"
+                                 ItemsSource="{Binding recetas}"
+                                 Margin="0,60,0,0"
+                                 Background="Transparent"
+                                 BorderBrush="Transparent"
+                                 AutomationProperties.AutomationId="ItemGridView"
+                                 AutomationProperties.Name="Grouped Items" >
                                 <ListView.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListViewItem}"
-                                    >
-                                        <!--<EventSetter Event="TouchDown"
-                         Handler="ListViewItem_TouchDown" />-->
+                                    <Style TargetType="{x:Type ListViewItem}" >
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="ListViewItem">
@@ -204,42 +197,34 @@
                                         </Setter>
                                     </Style>
                                 </ListView.ItemContainerStyle>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <UniformGrid Columns="1"
-                                                    HorizontalAlignment="Center"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
+                                
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Grid 
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Margin="0,0,0,0"
-                                                        Width="800"
-                                                        Tag="{Binding data}"
-                                                        >
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Top"
+                                            Height="auto"
+                                            Margin="0,0,0,0"
+                                            Width="800"
+                                            Tag="{Binding data}" >
                                             <TextBlock 
-                                                            FontSize="30"
-                                                            Margin="0,0,0,0"
-                                                            VerticalAlignment="Top"
-                                                            TextWrapping="Wrap"
-                                                            TextAlignment="Left"
-                                                            HorizontalAlignment="Left"
-                                                        >
-                                                            <Run Text="{Binding iteM_RECETA}"/><LineBreak/>
-                                                            <Run Text="{Binding valor, StringFormat={}{0:C0}}" FontWeight="Bold"/>
+                                                 FontSize="30"
+                                                 Margin="0,0,0,0"
+                                                 VerticalAlignment="Top"
+                                                 TextWrapping="Wrap"
+                                                 TextAlignment="Left"
+                                                 HorizontalAlignment="Left" >
+                                                     <Run Text="{Binding iteM_RECETA}"/><LineBreak/>
+                                                     <Run Text="{Binding valor, StringFormat={}{0:C0}}" FontWeight="Bold"/>
                                             </TextBlock>
                                             <Image  
-                                                            Source="{Binding img}"
-                                                            Height="30"
-                                                
-                                                            Margin="20,0,0,0"
-                                                            HorizontalAlignment="Right"
-                                                            VerticalAlignment="Center"
-                                                            Stretch="Uniform"
-                                                            TouchDown="Select_TouchDown"
-                                                        />
+                                                Source="{Binding img}"
+                                                Height="30"
+                                                Margin="20,0,0,0"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center"
+                                                Stretch="Uniform"
+                                                TouchDown="Select_TouchDown" />
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
